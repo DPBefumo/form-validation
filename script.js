@@ -1,5 +1,3 @@
-console.log('Add validation!');
-
 let form = document.querySelector("#parking-form")
 let inputFields = document.querySelectorAll("input")
 
@@ -15,9 +13,22 @@ form.addEventListener("submit", function(event){
             parentEl.classList.remove("input-valid")
             parentEl.classList.add("input-invalid")
         }
+        let parent = inputField.parentNode
+        if (parent.length > 0) {
+            let textValid = document.createTextNode("")
+            let divRef = document.createElement("div")
+            divRef.appendChild(textValid)
+            parent.appendChild(divRef)
+        } else {
+            let text = document.createTextNode("This field is Required")
+            let divRef = document.createElement("div")
+            divRef.appendChild(text)
+            parent.appendChild(divRef)
+        }
+        
     }    
     // add validation functions here 
-    // validateName ()
+    validateName ()
     // valiadteCar ()
     // validateDate ()
     // validateDays ()
@@ -25,6 +36,17 @@ form.addEventListener("submit", function(event){
     // validateCVV ()
     // validateExpiration ()
 })
+
+function validateName () {
+    let inputName = document.querySelector("#name")
+    let letters = /^{A-Za-z}+$/
+    // if(inputName.value.match(letters)) {
+    //     return true
+    // } else {
+    //     alert("Please input alphabet characters only")
+    //     return false
+    // }
+}
 
 // function valiadteCar () {
 
