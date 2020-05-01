@@ -2,24 +2,29 @@ console.log('Add validation!');
 
 const form = document.querySelector("#parking-form")
 console.log(form)
-
-const name = document.querySelector("#name")
+const formIsValid =
 
 form.addEventListener("submit", function(event){
     event.preventDefault()
     // add validation functions here 
     validateName ()
+    
 })
 
 
-// function validateName() {
-//      if (name == "") {
-//          alert ("Please provide your name!")
-//          document.getElementById("name").focus ()
-//          return false
-//      }
-//     return (true)
+function validateName() {
+    const name = document.querySelector("#name")
+    const nameValue = name.value
+    const parentEl = name.parentElement
+    
+    if (nameValue) {
+        console.log("name is valid")
+        parentEl.classList.remove("input-invalid")
+        parentEl.classList.add("input-valid")
+    } else {
+        console.log("name is not valid")
+        parentEl.classList.remove("input-valid")
+        parentEl.classList.add("input-invalid")
+    }
+
 }
-// name.addEventListener("input", function(event){
-//     if 
-// })
