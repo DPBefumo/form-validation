@@ -2,15 +2,18 @@ console.log('Add validation!');
 
 const form = document.querySelector("#parking-form")
 console.log(form)
-const formIsValid =
 
 form.addEventListener("submit", function(event){
     event.preventDefault()
     // add validation functions here 
     validateName ()
-    
+    valiadteCar ()
+    validateDate ()
+    validateDays ()
+    validateCC ()
+    validateCVV ()
+    validateExpiration ()
 })
-
 
 function validateName() {
     const name = document.querySelector("#name")
@@ -26,5 +29,29 @@ function validateName() {
         parentEl.classList.remove("input-valid")
         parentEl.classList.add("input-invalid")
     }
+
+}
+
+function valiadteCar () {
+
+}
+
+function validateDate () {
+
+} 
+
+function validateDays () {
+
+}
+
+function validateCC () {
+
+}
+
+function validateCVV () {
+    
+}
+
+function validateExpiration () {
 
 }
