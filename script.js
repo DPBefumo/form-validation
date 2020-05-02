@@ -6,25 +6,31 @@ form.addEventListener("submit", function(event){
     for (let inputField of inputFields) {
         let inputValue = inputField.value
         let parentEl = inputField.parentElement
-        if (inputValue.length > 0) {
-            parentEl.classList.remove("input-invalid")
-            parentEl.classList.add("input-valid")
-        } else {
+        let parent = inputField.parentNode
+        let text = document.createTextNode("This field is Required")
+        let divRef = document.createElement("div")
+        if (inputValue.length <= 0) {
             parentEl.classList.remove("input-valid")
             parentEl.classList.add("input-invalid")
-        }
-        let parent = inputField.parentNode
-        if (parent.length > 0) {
-            let textValid = document.createTextNode("")
-            let divRef = document.createElement("div")
-            divRef.appendChild(textValid)
-            parent.appendChild(divRef)
-        } else {
-            let text = document.createTextNode("This field is Required")
-            let divRef = document.createElement("div")
             divRef.appendChild(text)
             parent.appendChild(divRef)
+        } else {
+            parentEl.classList.remove("input-invalid")
+            parentEl.classList.add("input-valid")
+            parent.removeChild(parent.lastChild)
         }
+
+        // if (parent.length > 0) {
+        //     let textValid = document.createTextNode("")
+        //     let divRef = document.createElement("div")
+        //     divRef.appendChild(textValid)
+        //     parent.appendChild(divRef)
+        // } else {
+        //     let text = document.createTextNode("This field is Required")
+        //     let divRef = document.createElement("div")
+        //     divRef.appendChild(text)
+        //     parent.appendChild(divRef)
+        // }
         
     }    
     // add validation functions here 
