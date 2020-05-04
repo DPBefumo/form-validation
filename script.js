@@ -85,10 +85,10 @@ function luhnCheck(val) {
     return (sum % 10) == 0;
 }
 
-function validateCardNumber(number) {
+function validateCardNumber() {
     let cardNumber = document.querySelector('#credit-card')
     let regex = new RegExp("^[0-9]{16}$");
-    if (!regex.test(number))
+    if (!regex.test(cardNumber)) 
         return false;
 
     return luhnCheck(cardNumber);
@@ -99,6 +99,11 @@ function validateCardNumber(number) {
 function validateCVV() {
     let inputCVV = document.querySelector('#cvv')
     //must be a 3 digit number
+    if (inputCVV.length < 3 && inputCVV.length > 4) {
+        return makeInvalid(inputCVV)
+    } else {
+        return makeValid(inputCVV)
+    }
     //must be vaild
 }
 
