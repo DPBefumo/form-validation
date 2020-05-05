@@ -6,27 +6,25 @@ let formIsValid //assigned but never used
 form.addEventListener('submit', function (event) {
   event.preventDefault()
   validateName()
-  valiadteCarYr()
-  validateCarMk()
-  validateCarMd()
+  validateCar()
   validateDate()
   validateDays()
-  validateCardNumber()
+  validateCC()
   validateCVV()
   validateExpiration()
-  // only submit when these are valid. How to prove they are valid?
-  // for (const inputField of inputFields) {
-  //   const inputValue = inputField.value
-  //   const parent = inputField.parentNode
-  //   const text = document.createTextNode('This field is Required') // is there a way to make "This field" say which item is required?
-  //   const divRef = document.createElement('div')
-  //   if (inputValue.length <= 0) {
-  //     divRef.appendChild(text)
-  //     parent.appendChild(divRef) // cant get this to stop repeating
-  //   } else {
-  //     parent.removeChild(parent.lastChild) // the lastChild deletes code that is already written in HTML
-  //   }
-  // }
+  
+  for (const inputField of inputFields) {
+    const inputValue = inputField.value
+    const parent = inputField.parentNode
+    const text = document.createTextNode('This field is Required') // is there a way to make "This field" say which item is required?
+    const divRef = document.createElement('div')
+    if (inputValue.length <= 0) {
+      divRef.appendChild(text)
+      parent.appendChild(divRef) // cant get this to stop repeating
+    } else {
+      parent.removeChild(parent.lastChild) // the lastChild deletes code that is already written in HTML
+    }
+  }
   // must create a total amount owed when submit button is entered and valid. The cost is $5 per weekday, and $7 per weekend day. `.map` and `.reduce` will be very helpful in calculating the total cost. will use #total
 })
 
@@ -52,57 +50,52 @@ function validateName () {
   }
 }
 
-function valiadteCarYr () {
+function validateCar () {
   const inputYear = document.querySelector('#car-year')
-  const parentYear = inputYear.parentElement
-  if (Number.isInteger(inputYear.value) && inputYear.length === 4 && inputYear > 1900 && inputYear < 2020) {
+  const parentYear = document.querySelector('#car-field')
+  const inputCarMk = document.querySelector('#car-make')
+  const inputCarMd = document.querySelector('#car-model')
+  if (inputYear.value > 1900 && inputYear.value < 2021 && inputCarMk !== '' && inputCarMd !== ''){
     makeValid(parentYear)
   } else {
     makeInvalid(parentYear)
   }
 }
 
-function validateCarMk () {
-  const inputCarMk = document.querySelector('#car-make')
-  const parentCarMk = inputCarMk.parentElement
-  if (inputCarMk.value <= 0) {
-    makeInvalid(parentCarMk)
-  } else {
-    makeValid(parentCarMk)
-  }
-}
-
-function validateCarMd () {
-  const inputCarMd = document.querySelector('#car-model')
-  const parentCarMd = inputCarMd.parentElement
-  if (inputCarMd.value <= 0) {
-    return makeInvalid(inputCarMd)
-  } else {
-    return makeValid(inputCarMd)
-  }
-}
-
 function validateDate () {
   const inputDate = document.querySelector('#start-date')
-  // must be a future date code does not prevent it from past date but looks right. Issue in validation?
+  const parentDate = inputDate.parentElement
   const todayDate = Date.now()
-  if (inputDate.value < todayDate) {
-    return makeInvalid(inputDate)
+  if (inputDate.valueAsNumber > todayDate) {
+    makeValid(parentDate)
+  } else if (inputDate.valueAsNumber < todayDate) {
+    makeInvalid(parentDate)
   } else {
-    return makeValid(inputDate)
+    makeInvalid(parentDate)
   }
 }
 
 function validateDays () {
   const inputDays = document.querySelector('#days')
   const parentDays = inputDays.parentElement
-  // days must be a number
-  if (Number.isInteger(inputDays.value) && inputDays > 0 && inputDays < 31) {
+  if (inputDays.value > 0 && inputDays.value < 31) {
     makeValid(parentDays)
   } else {
     makeInvalid(parentDays)
   }
-  // must be vaild
+}
+
+function validateCC() {
+  const cardNumber = document.querySelector('#credit-card')
+  const parentCardNumber = cardNumber.parentElement
+  validateCardNumber ()
+  if (cardNumber.value === '') {
+    makeInvalid(parentCardNumber)
+  } else if (validateCardNumber (cardNumber.value) === false) {
+    makeInvalid(parentCardNumber) 
+  } else {
+    makeValid(parentCardNumber)
+  }
 }
 
 function luhnCheck (val) {
@@ -118,29 +111,19 @@ function luhnCheck (val) {
     sum += intVal
   }
   return (sum % 10) === 0
-}//did not apply to my page
+}
 
-function validateCardNumber () {
-  const cardNumber = document.querySelector('#credit-card')
-  const parentCardNumber = cardNumber.parentElement
-  // const regex = new RegExp('^[0-9]{16}$')
-  // if (!regex.test(cardNumber)) { return false }
+function validateCardNumber (number) {
+  const regex = new RegExp('^[0-9]{16}$')
+  if (!regex.test(number)) { return false }
 
-  // return luhnCheck(cardNumber)
-  // // must be a 16 digit number
-  if (cardNumber > 0) {
-    makeValid(parentCardNumber)
-  } else {
-    makeInvalid(parentCardNumber)
-  }
-  // must be vaild
+  return luhnCheck(number)
 }
 
 function validateCVV () {
   const inputCVV = document.querySelector('#cvv')
   const parentCVV = inputCVV.parentElement
-  // must be a 3 digit number
-  if (inputCVV.length < 3 && inputCVV.length > 4) {
+  if (inputCVV.value < 999 && inputCVV.value > 100) {
     makeValid(parentCVV)
   } else {
     makeInvalid(parentCVV)
