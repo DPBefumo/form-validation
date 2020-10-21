@@ -37,8 +37,6 @@ function makeInvalid (parentElement) {
   parentElement.classList.remove('input-valid')
   parentElement.classList.add('input-invalid')
 }
-//helper functions aren't being applied in this form... why is that?
-
 
 function validateName () {
   const inputName = document.getElementById('name')
